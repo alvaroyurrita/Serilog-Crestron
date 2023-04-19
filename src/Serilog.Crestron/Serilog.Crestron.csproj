@@ -7,6 +7,8 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/alvaroyurrita/Serilog-Crestron</PackageProjectUrl>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Title>Serilog Sinks, Enrichers and Extensions for Crestron 4-Series Control Appliances and Control Servers</Title>
         <AssemblyName>Serilog.Crestron</AssemblyName>

@@ -4,6 +4,7 @@
         <Configurations>Debug;Release;ReleaseNoPush;ReleaseVC4</Configurations>
         <Platforms>AnyCPU</Platforms>
         <RootNamespace>CrestronLoggingDemo</RootNamespace>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Crestron.SimplSharp.SDK.Program" Version="2.19.48" />
@@ -27,17 +28,4 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Serilog.Crestron\Serilog.Crestron.csproj" />
     </ItemGroup>
-    <Target Name="CLZPostBuildDebug" AfterTargets="SimplSharpPostProcess" Condition="'$(Configuration)'=='Debug'">
-        <Exec Command="powershell.exe –command &quot;&amp; { .\Deployment.ps1 '$(ProjectDir)' '$(OutDir)' '$(ProjectName)' '$(Configuration)' }&quot;" />
-    </Target>
-    <Target Name="CLZPostBuildRelease" AfterTargets="SimplSharpPostProcess" Condition="'$(Configuration)'=='Release'">
-        <Exec Command="powershell.exe –command &quot;&amp; { .\Deployment.ps1 '$(ProjectDir)' '$(OutDir)' '$(ProjectName)' '$(Configuration)' }&quot;" />
-    </Target>
-    <Target Name="CLZPostBuildReleaseVC4" AfterTargets="SimplSharpPostProcess" Condition="'$(Configuration)'=='ReleaseVC4'">
-        <Exec Command="powershell.exe –command &quot;&amp; { .\Deployment.ps1 '$(ProjectDir)' '$(OutDir)' '$(ProjectName)' '$(Configuration)' }&quot;" />
-    </Target>
-    <Target Name="CLZPostBuildReleaseNoPush" AfterTargets="SimplSharpPostProcess" Condition="'$(Configuration)'=='ReleaseNoPush'">
-        <Message Text="Release Compiling Only. No Processor communication" Importance="High" />
-        <Copy SourceFiles="$(ProjectDir)$(OutDir)$(ProjectName).cpz" DestinationFolder="../" />
-    </Target>
 </Project>
