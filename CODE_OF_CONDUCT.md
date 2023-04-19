@@ -1,3 +1,3 @@
 # Code of Conduct
 
-TODO
+Please follow the code of conduct defined by the [Contributor Covenant](http://contributor-covenant.org/) when contributing.

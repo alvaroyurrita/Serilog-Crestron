@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net47</TargetFramework>
+        <Configurations>Debug;Release;ReleaseNoPush;ReleaseVC4</Configurations>
+        <Platforms>AnyCPU</Platforms>
+        <RootNamespace>CrestronLoggingDemo</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Crestron.SimplSharp.SDK.Program" Version="2.19.48" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+        <PackageReference Include="Serilog.Settings.AppSettings" Version="2.2.2" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Update="App.config">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="ErrorLog.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="FileLog.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Serilog.Crestron\Serilog.Crestron.csproj" />
+    </ItemGroup>
+    <Target Name="CLZPostBuildDebug" AfterTargets="SimplSharpPostProcess" Condition="'$(Configuration)'=='Debug'">
+        <Exec Command="powershell.exe –command &quot;&amp; { .\Deployment.ps1 '$(ProjectDir)' '$(OutDir)' '$(ProjectName)' '$(Configuration)' }&quot;" />
+    </Target>
+    <Target Name="CLZPostBuildRelease" AfterTargets="SimplSharpPostProcess" Condition="'$(Configuration)'=='Release'">
+        <Exec Command="powershell.exe –command &quot;&amp; { .\Deployment.ps1 '$(ProjectDir)' '$(OutDir)' '$(ProjectName)' '$(Configuration)' }&quot;" />
+    </Target>
+    <Target Name="CLZPostBuildReleaseVC4" AfterTargets="SimplSharpPostProcess" Condition="'$(Configuration)'=='ReleaseVC4'">
+        <Exec Command="powershell.exe –command &quot;&amp; { .\Deployment.ps1 '$(ProjectDir)' '$(OutDir)' '$(ProjectName)' '$(Configuration)' }&quot;" />
+    </Target>
+    <Target Name="CLZPostBuildReleaseNoPush" AfterTargets="SimplSharpPostProcess" Condition="'$(Configuration)'=='ReleaseNoPush'">
+        <Message Text="Release Compiling Only. No Processor communication" Importance="High" />
+        <Copy SourceFiles="$(ProjectDir)$(OutDir)$(ProjectName).cpz" DestinationFolder="../" />
+    </Target>
+</Project>

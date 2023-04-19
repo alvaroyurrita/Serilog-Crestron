@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net47</TargetFramework>
+        <Copyright>Copyright © 2023</Copyright>
+        <Authors>Alvaro Yurrita, Scott Pidzarko</Authors>
+        <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/alvaroyurrita/Serilog-Crestron</PackageProjectUrl>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Title>Serilog Sinks, Enrichers and Extensions for Crestron 4-Series Control Appliances and Control Servers</Title>
+        <AssemblyName>Serilog.Crestron</AssemblyName>
+        <Description>Sinks, Enrichers and Extensions that complement the Serilog Structured Logging package.  It provides logging capabilities to Crestron Console, and to Crestron Error Log. </Description>
+        <RepositoryUrl>https://github.com/alvaroyurrita/Serilog-Crestron</RepositoryUrl>
+        <PackageTags>Serilog Sink Crestron Extensions Enricher Console ErrorLog</PackageTags>
+        <Nullable>enable</Nullable>
+        <LangVersion>8.0</LangVersion>
+        <RootNamespace>Serilog.Crestron</RootNamespace>
+        <PackageIcon>serilog-sink-nuget.png</PackageIcon>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    </PropertyGroup>
+    <ItemGroup>
+      <None Include="README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+        <Link>README.md</Link>
+      </None>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="..\..\assets\serilog-sink-nuget.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Crestron.SimplSharp.SDK.Library" Version="2.19.48" />
+      <PackageReference Include="Nullable" Version="1.3.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Serilog" Version="2.12.0" />
+    </ItemGroup>
+</Project>

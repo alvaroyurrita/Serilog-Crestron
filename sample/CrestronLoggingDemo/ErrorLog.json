@@ -1,0 +1,15 @@
+{
+    "Serilog": {
+        "Using":  [ "Serilog.Crestron" ],
+        "MinimumLevel": "Fatal",
+        "Enrich": [ "WithSlotNo", "WithProgramName" ],
+        "WriteTo": [
+            {
+                "Name": "CrestronErrorLog",
+                "Args": {
+                    "outputTemplate": "JSON LOG: [{Level:u3} {SlotNo}-{FileName}-{MemberName}-{LineNumber}] {Message:lj}"
+                }
+            }
+        ]
+    }
+}
