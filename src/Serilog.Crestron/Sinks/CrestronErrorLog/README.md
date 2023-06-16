@@ -23,7 +23,7 @@ When connected using toolbox text console tool enter `ERRLOG PLOGALL` and you wi
 ```
 6. Notice: SimplSharpPro[App01] # 2023-04-01 11:24:36 # [INF] Hello, world!
 ```
-or when using VC4 connect via ssh, enter `JOURNALCTL -xef -u VirtualControl` and you will see an entry like this on:
+or when using VC4 connect via ssh, enter `journalctl -xef -u VirtualControl` and you will see an entry like this on:
 ```
 Apr 03 22:05:33 VC4 SimplSharpPro[50389]: [INF] Hello, world!
 ```
