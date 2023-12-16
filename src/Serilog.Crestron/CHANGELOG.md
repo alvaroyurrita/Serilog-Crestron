@@ -1,3 +1,7 @@
+# v2.1.0
+12/16/2023
+- Updated to Net 6.0 with minimum Crestron SDK Library 2.20.31
+
 # v2.0.0
 8/11/2023
 - Updated to Serilog 3.0.0
