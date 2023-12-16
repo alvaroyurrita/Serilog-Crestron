@@ -35,13 +35,13 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Platform
         /// Writes to Crestron Console
         /// </summary>
         /// <param name="value">Value To write</param>
-        public override void Write(string value) => global::Crestron.SimplSharp.CrestronConsole.Print(value);
+        public override void Write(string? value) => global::Crestron.SimplSharp.CrestronConsole.Print(value??"");
         /// <summary>
         /// Writes to Crestron Console
         /// </summary>
         /// <param name="message"></param>
         /// <param name="args"></param>
-        public override void Write(string message, params object[] args) => global::Crestron.SimplSharp.CrestronConsole.Print(message, args);
+        public override void Write(string message, params object?[] args) => global::Crestron.SimplSharp.CrestronConsole.Print(message, args!);
         /// <summary>
         /// Writes to Crestron Console a single new line
         /// </summary>
@@ -50,9 +50,9 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Platform
         /// Writes to Crestron Console and generates a new line after
         /// </summary>
         /// <param name="value">Value To write</param>
-        public override void WriteLine(string value)
+        public override void WriteLine(string? value)
         {
-            global::Crestron.SimplSharp.CrestronConsole.Print(value);
+            global::Crestron.SimplSharp.CrestronConsole.Print(value ?? "");
             WriteLine();
         }
 
@@ -61,9 +61,9 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Platform
         /// </summary>
         /// <param name="message"></param>
         /// <param name="args"></param>
-        public override void WriteLine(string message, params object[] args)
+        public override void WriteLine(string message, params object?[] args)
         {
-            global::Crestron.SimplSharp.CrestronConsole.Print(message, args);
+            global::Crestron.SimplSharp.CrestronConsole.Print(message, args!);
             WriteLine();
         }
 
