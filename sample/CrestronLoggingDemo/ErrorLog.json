@@ -1,7 +1,7 @@
 {
     "Serilog": {
         "Using":  [ "Serilog.Crestron" ],
-        "MinimumLevel": "Fatal",
+        "MinimumLevel": "Verbose",
         "Enrich": [ "WithSlotNo", "WithProgramName" ],
         "WriteTo": [
             {
