@@ -132,10 +132,9 @@ namespace CrestronLoggingDemo
                 //Execute RunErrorLogExamples in the console to generate a new set of errors
                 //No need to watch for file changes, since Microsoft.Extensions.Configuration.Json supports Hot Reload
                 //https://swimburger.net/blog/dotnet/changing-serilog-minimum-level-without-application-restart-on-dotnet-framework-and-core
-                //Notice that it is necessary to provide the full path of the ErrorLog for Hot Reload to work on 4-Series Control Appliances. 
-                var errorLogJsonPath = Path.Combine(InitialParametersClass.ProgramDirectory.ToString(), "ErrorLog.json");
                 var errorLogJsonConfig = new ConfigurationBuilder()
-                    .AddJsonFile(path:errorLogJsonPath,false,true)
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("ErrorLog.json",false,true)
                     .Build();
                 _errorLogFromJson = new LoggerConfiguration()
                     .ReadFrom.Configuration(errorLogJsonConfig)
@@ -146,6 +145,7 @@ namespace CrestronLoggingDemo
                 //Ideal when working on VC4
                 //Use Tail LogFile.txt -F to watch the added logs every 30 seconds.
                 var fileLogJsonConfig = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("FileLog.json", optional:false, reloadOnChange:true)
                     .Build();
                 var logFilePath =  Path.Combine(Crestron.SimplSharp.CrestronIO.Directory.GetApplicationRootDirectory() + Path.DirectorySeparatorChar, "user","LogFile.txt");

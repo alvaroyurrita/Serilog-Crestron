@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net47</TargetFramework>
-        <Configurations>Debug;Release;ReleaseNoPush;ReleaseVC4</Configurations>
+        <TargetFrameworks>net47;net6.0</TargetFrameworks>
+        <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
         <RootNamespace>CrestronLoggingDemo</RootNamespace>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Crestron.SimplSharp.SDK.Program" Version="2.14.53" />
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+        <PackageReference Include="Crestron.SimplSharp.SDK.Program" Version="2.20.31" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
         <PackageReference Include="Serilog.Settings.AppSettings" Version="2.2.2" />
         <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
