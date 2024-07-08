@@ -24,21 +24,17 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
 {
     internal class MessageTemplateOutputTokenRenderer : OutputTemplateTokenRenderer
     {
+        private readonly ThemedMessageTemplateRenderer _renderer;
         private readonly ConsoleTheme _theme;
         private readonly PropertyToken _token;
-        private readonly ThemedMessageTemplateRenderer _renderer;
-
-        public MessageTemplateOutputTokenRenderer(ConsoleTheme theme, PropertyToken token, IFormatProvider? formatProvider)
+        public MessageTemplateOutputTokenRenderer(ConsoleTheme theme, PropertyToken token,
+            IFormatProvider? formatProvider)
         {
             _theme = theme ?? throw new ArgumentNullException(nameof(theme));
             _token = token ?? throw new ArgumentNullException(nameof(token));
-
             bool isLiteral = false, isJson = false;
-
             if (token.Format != null)
-            {
                 foreach (var t in token.Format)
-                {
                     switch (t)
                     {
                         case 'l':
@@ -48,16 +44,11 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
                             isJson = true;
                             break;
                     }
-                }
-            }
-
             var valueFormatter = isJson
                 ? (ThemedValueFormatter)new ThemedJsonValueFormatter(theme, formatProvider)
                 : new ThemedDisplayValueFormatter(theme, formatProvider);
-
             _renderer = new ThemedMessageTemplateRenderer(theme, valueFormatter, isLiteral);
         }
-
         public override void Render(LogEvent logEvent, TextWriter output)
         {
             if (_token.Alignment is null || !_theme.CanBuffer)
@@ -65,7 +56,6 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
                 _ = _renderer.Render(logEvent.MessageTemplate, logEvent.Properties, output);
                 return;
             }
-
             var buffer = new StringWriter();
             var invisible = _renderer.Render(logEvent.MessageTemplate, logEvent.Properties, buffer);
             var value = buffer.ToString();

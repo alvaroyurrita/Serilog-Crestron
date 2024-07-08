@@ -19,7 +19,6 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Themes
         public const string UNTHEMED = "";
         public const string RESET = "\x1b[0m";
         public const string BOLD = "\x1b[1m";
-
         public const string BLACK = "\x1b[30m";
         public const string RED = "\x1b[31m";
         public const string GREEN = "\x1b[32m";
@@ -28,7 +27,6 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Themes
         public const string MAGENTA = "\x1b[35m";
         public const string CYAN = "\x1b[36m";
         public const string WHITE = "\x1b[37m";
-
         public const string BRIGHT_BLACK = "\x1b[30;1m";
         public const string BRIGHT_RED = "\x1b[31;1m";
         public const string BRIGHT_GREEN = "\x1b[32;1m";

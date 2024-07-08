@@ -7,7 +7,7 @@ namespace CrestronLoggingDemo
 {
     public partial class ControlSystem
     {
-        private Logger _errorLogFromJson;
+        private ILogger _errorLogFromJson = Logger.None;
         private void SetJsonConfiguredLog()
         {
             //Setting Up Error Log with JSON Configuration.

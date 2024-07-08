@@ -1,6 +1,5 @@
 ﻿using System;
 using Crestron.SimplSharp;
-using Serilog;
 
 namespace CrestronLoggingDemo
 {
@@ -11,7 +10,6 @@ namespace CrestronLoggingDemo
             switch (ethernetEventArgs.EthernetEventType)
             {
                 case eEthernetEventType.LinkDown:
-
                     if (ethernetEventArgs.EthernetAdapter == EthernetAdapterType.EthernetLANAdapter)
                     {
                     }
@@ -34,9 +32,6 @@ namespace CrestronLoggingDemo
                 case eProgramStatusEventType.Resumed:
                     break;
                 case eProgramStatusEventType.Stopping:
-                    _errorLogFromXml.Dispose();
-                    _fileLogFromXml.Dispose();
-                    _errorLogFromJson.Dispose();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(programStatusEventType), programStatusEventType, null);
@@ -51,9 +46,6 @@ namespace CrestronLoggingDemo
                 case eSystemEventType.DiskRemoved:
                     break;
                 case eSystemEventType.Rebooting:
-                    _errorLogFromXml.Dispose();
-                    _fileLogFromXml.Dispose();
-                    _errorLogFromJson.Dispose();
                     break;
                 case eSystemEventType.TimeChange:
                     break;

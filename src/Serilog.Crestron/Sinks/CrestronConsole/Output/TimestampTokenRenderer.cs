@@ -23,23 +23,20 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
 {
     internal class TimestampTokenRenderer : OutputTemplateTokenRenderer
     {
+        private readonly IFormatProvider? _formatProvider;
         private readonly ConsoleTheme _theme;
         private readonly PropertyToken _token;
-        private readonly IFormatProvider? _formatProvider;
-
         public TimestampTokenRenderer(ConsoleTheme theme, PropertyToken token, IFormatProvider? formatProvider)
         {
             _theme = theme;
             _token = token;
             _formatProvider = formatProvider;
         }
-
         public override void Render(LogEvent logEvent, TextWriter output)
         {
             // We need access to ScalarValue.Render() to avoid this alloc; just ensures
             // that custom format providers are supported properly.
             var sv = new ScalarValue(logEvent.Timestamp);
-
             var _ = 0;
             using (_theme.Apply(output, ConsoleThemeStyle.SecondaryText, ref _))
             {

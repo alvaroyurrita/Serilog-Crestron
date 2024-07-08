@@ -23,17 +23,15 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
 {
     internal class EventPropertyTokenRenderer : OutputTemplateTokenRenderer
     {
+        private readonly IFormatProvider? _formatProvider;
         private readonly ConsoleTheme _theme;
         private readonly PropertyToken _token;
-        private readonly IFormatProvider? _formatProvider;
-
         public EventPropertyTokenRenderer(ConsoleTheme theme, PropertyToken token, IFormatProvider? formatProvider)
         {
             _theme = theme;
             _token = token;
             _formatProvider = formatProvider;
         }
-
         public override void Render(LogEvent logEvent, TextWriter output)
         {
             // If a property is missing, don't render anything (message templates render the raw token here).
@@ -42,7 +40,6 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
                 Padding.Apply(output, string.Empty, _token.Alignment);
                 return;
             }
-
             var _ = 0;
             using (_theme.Apply(output, ConsoleThemeStyle.SecondaryText, ref _))
             {

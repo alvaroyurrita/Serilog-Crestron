@@ -23,23 +23,26 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
     {
         private const string STACK_FRAME_LINE_PREFIX = "   ";
         private readonly ConsoleTheme _theme;
-
-        public ExceptionTokenRenderer(ConsoleTheme theme, PropertyToken pt) => _theme = theme;
-
+        public ExceptionTokenRenderer(ConsoleTheme theme, PropertyToken pt)
+        {
+            _theme = theme;
+        }
         public override void Render(LogEvent logEvent, TextWriter output)
         {
             // Padding is never applied by this renderer.
-
             if (logEvent.Exception is null)
                 return;
-
             var lines = new StringReader(logEvent.Exception.ToString());
             while (lines.ReadLine() is { } nextLine)
             {
-                var style = nextLine.StartsWith(STACK_FRAME_LINE_PREFIX) ? ConsoleThemeStyle.SecondaryText : ConsoleThemeStyle.Text;
+                var style = nextLine.StartsWith(STACK_FRAME_LINE_PREFIX)
+                    ? ConsoleThemeStyle.SecondaryText
+                    : ConsoleThemeStyle.Text;
                 var _ = 0;
                 using (_theme.Apply(output, style, ref _))
+                {
                     output.Write(nextLine);
+                }
                 output.WriteLine();
             }
         }

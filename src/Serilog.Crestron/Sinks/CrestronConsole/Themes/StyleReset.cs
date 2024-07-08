@@ -21,13 +21,14 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Themes
     {
         private readonly ConsoleTheme _theme;
         private readonly TextWriter _output;
-
         public StyleReset(ConsoleTheme theme, TextWriter output)
         {
             _theme = theme;
             _output = output;
         }
-
-        public void Dispose() => _theme.Reset(_output);
+        public void Dispose()
+        {
+            _theme.Reset(_output);
+        }
     }
 }

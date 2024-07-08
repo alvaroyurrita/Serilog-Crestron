@@ -23,9 +23,10 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
     internal class NewLineTokenRenderer : OutputTemplateTokenRenderer
     {
         private readonly Alignment? _alignment;
-
-        public NewLineTokenRenderer(Alignment? alignment) => _alignment = alignment;
-
+        public NewLineTokenRenderer(Alignment? alignment)
+        {
+            _alignment = alignment;
+        }
         public override void Render(LogEvent logEvent, TextWriter output)
         {
             if (_alignment.HasValue)

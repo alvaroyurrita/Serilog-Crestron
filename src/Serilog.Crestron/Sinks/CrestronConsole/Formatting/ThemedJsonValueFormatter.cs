@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#nullable enable
 using System;
 using System.Globalization;
 using System.IO;
@@ -26,17 +25,16 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Formatting
     {
         private readonly ThemedDisplayValueFormatter _displayFormatter;
         private readonly IFormatProvider? _formatProvider;
-
         public ThemedJsonValueFormatter(ConsoleTheme theme, IFormatProvider? formatProvider)
             : base(theme)
         {
             _displayFormatter = new ThemedDisplayValueFormatter(theme, formatProvider);
             _formatProvider = formatProvider;
         }
-
         public override ThemedValueFormatter SwitchTheme(ConsoleTheme theme)
-        => new ThemedJsonValueFormatter(theme, _formatProvider);
-
+        {
+            return new ThemedJsonValueFormatter(theme, _formatProvider);
+        }
         protected override int VisitScalarValue(ThemedValueFormatterState state, ScalarValue scalar)
         {
             if (scalar is null)
@@ -47,145 +45,151 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Formatting
                 ? _displayFormatter.FormatLiteralValue(scalar, state.Output, state.Format)
                 : FormatLiteralValue(scalar, state.Output);
         }
-
         protected override int VisitSequenceValue(ThemedValueFormatterState state, SequenceValue sequence)
         {
             if (sequence == null)
                 throw new ArgumentNullException(nameof(sequence));
-
             var count = 0;
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write('[');
-
+            }
             var delim = string.Empty;
             foreach (var t in sequence.Elements)
             {
                 if (delim.Length != 0)
-                {
                     using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                    {
                         state.Output.Write(delim);
-                }
-
+                    }
                 delim = ", ";
                 _ = Visit(state.Nest(), t);
             }
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write(']');
-
+            }
             return count;
         }
-
         protected override int VisitStructureValue(ThemedValueFormatterState state, StructureValue structure)
         {
             var count = 0;
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write('{');
-
+            }
             var delim = string.Empty;
             foreach (var property in structure.Properties)
             {
                 if (delim.Length != 0)
-                {
                     using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                    {
                         state.Output.Write(delim);
-                }
-
+                    }
                 delim = ", ";
-
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.Name, ref count))
+                {
                     JsonValueFormatter.WriteQuotedJsonString(property.Name, state.Output);
-
+                }
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                {
                     state.Output.Write(": ");
-
+                }
                 count += Visit(state.Nest(), property.Value);
             }
-
             if (structure.TypeTag != null)
             {
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                {
                     state.Output.Write(delim);
-
+                }
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.Name, ref count))
+                {
                     JsonValueFormatter.WriteQuotedJsonString("$type", state.Output);
-
+                }
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                {
                     state.Output.Write(": ");
-
+                }
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.String, ref count))
+                {
                     JsonValueFormatter.WriteQuotedJsonString(structure.TypeTag, state.Output);
+                }
             }
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write('}');
-
+            }
             return count;
         }
-
         protected override int VisitDictionaryValue(ThemedValueFormatterState state, DictionaryValue dictionary)
         {
             var count = 0;
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write('{');
-
+            }
             var delim = string.Empty;
             foreach (var element in dictionary.Elements)
             {
                 if (delim.Length != 0)
-                {
                     using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                    {
                         state.Output.Write(delim);
-                }
-
+                    }
                 delim = ", ";
-
                 var style = element.Key.Value == null
                     ? ConsoleThemeStyle.Null
                     : element.Key.Value is string
                         ? ConsoleThemeStyle.String
                         : ConsoleThemeStyle.Scalar;
-
                 using (ApplyStyle(state.Output, style, ref count))
-                    JsonValueFormatter.WriteQuotedJsonString((element.Key.Value ?? "null").ToString() ?? "", state.Output);
-
+                {
+                    JsonValueFormatter.WriteQuotedJsonString((element.Key.Value ?? "null").ToString() ?? "",
+                        state.Output);
+                }
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                {
                     state.Output.Write(": ");
-
+                }
                 count += Visit(state.Nest(), element.Value);
             }
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write('}');
-
+            }
             return count;
         }
         private int FormatLiteralValue(ScalarValue scalar, TextWriter output)
         {
             var value = scalar.Value;
             var count = 0;
-
             switch (value)
             {
                 case null:
                 {
                     using (ApplyStyle(output, ConsoleThemeStyle.Null, ref count))
+                    {
                         output.Write("null");
+                    }
                     return count;
                 }
                 case string str:
                 {
                     using (ApplyStyle(output, ConsoleThemeStyle.String, ref count))
+                    {
                         JsonValueFormatter.WriteQuotedJsonString(str, output);
+                    }
                     return count;
                 }
-                case ValueType _ when value is int || value is uint || value is long || value is ulong || value is decimal || value is byte || value is sbyte || value is short || value is ushort:
+                case ValueType _ when value is int || value is uint || value is long || value is ulong ||
+                                      value is decimal || value is byte || value is sbyte || value is short ||
+                                      value is ushort:
                 {
                     using (ApplyStyle(output, ConsoleThemeStyle.Number, ref count))
+                    {
                         output.Write(((IFormattable)value).ToString(null, CultureInfo.InvariantCulture));
+                    }
                     return count;
                 }
                 case double d:
@@ -213,14 +217,17 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Formatting
                 case bool b:
                 {
                     using (ApplyStyle(output, ConsoleThemeStyle.Boolean, ref count))
+                    {
                         output.Write(b ? "true" : "false");
-
+                    }
                     return count;
                 }
                 case char ch:
                 {
                     using (ApplyStyle(output, ConsoleThemeStyle.Scalar, ref count))
+                    {
                         JsonValueFormatter.WriteQuotedJsonString(ch.ToString(), output);
+                    }
                     return count;
                 }
                 case ValueType _ when value is DateTime || value is DateTimeOffset:
@@ -235,11 +242,10 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Formatting
                 }
             }
             using (ApplyStyle(output, ConsoleThemeStyle.Scalar, ref count))
+            {
                 JsonValueFormatter.WriteQuotedJsonString(value.ToString() ?? "", output);
-
+            }
             return count;
         }
     }
 }
-
-#nullable restore

@@ -23,34 +23,33 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
 {
     internal class LevelTokenRenderer : OutputTemplateTokenRenderer
     {
-        private readonly ConsoleTheme _theme;
+        private static readonly Dictionary<LogEventLevel, ConsoleThemeStyle> Levels =
+            new Dictionary<LogEventLevel, ConsoleThemeStyle>
+            {
+                { LogEventLevel.Verbose, ConsoleThemeStyle.LevelVerbose },
+                { LogEventLevel.Debug, ConsoleThemeStyle.LevelDebug },
+                { LogEventLevel.Information, ConsoleThemeStyle.LevelInformation },
+                { LogEventLevel.Warning, ConsoleThemeStyle.LevelWarning },
+                { LogEventLevel.Error, ConsoleThemeStyle.LevelError },
+                { LogEventLevel.Fatal, ConsoleThemeStyle.LevelFatal }
+            };
         private readonly PropertyToken _levelToken;
-
-        static readonly Dictionary<LogEventLevel, ConsoleThemeStyle> _levels = new Dictionary<LogEventLevel, ConsoleThemeStyle>
-        {
-            { LogEventLevel.Verbose, ConsoleThemeStyle.LevelVerbose },
-            { LogEventLevel.Debug, ConsoleThemeStyle.LevelDebug },
-            { LogEventLevel.Information, ConsoleThemeStyle.LevelInformation },
-            { LogEventLevel.Warning, ConsoleThemeStyle.LevelWarning },
-            { LogEventLevel.Error, ConsoleThemeStyle.LevelError },
-            { LogEventLevel.Fatal, ConsoleThemeStyle.LevelFatal },
-        };
-
+        private readonly ConsoleTheme _theme;
         public LevelTokenRenderer(ConsoleTheme theme, PropertyToken levelToken)
         {
             _theme = theme;
             _levelToken = levelToken;
         }
-
         public override void Render(LogEvent logEvent, TextWriter output)
         {
             var moniker = LevelOutputFormat.GetLevelMoniker(logEvent.Level, _levelToken.Format);
-            if (!_levels.TryGetValue(logEvent.Level, out var levelStyle))
+            if (!Levels.TryGetValue(logEvent.Level, out var levelStyle))
                 levelStyle = ConsoleThemeStyle.Invalid;
-
             var _ = 0;
             using (_theme.Apply(output, levelStyle, ref _))
+            {
                 Padding.Apply(output, moniker, _levelToken.Alignment);
+            }
         }
     }
 }

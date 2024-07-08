@@ -7,9 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0AC7FA22-D23
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{DBCB6E66-7488-44D0-B204-6011FC7869CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Crestron", "src\Serilog.Crestron\Serilog.Crestron.csproj", "{CBC44088-953D-4B49-A182-3C00F83A9356}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Crestron", "src\Serilog.Crestron\Serilog.Crestron.csproj", "{CBC44088-953D-4B49-A182-3C00F83A9356}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrestronLoggingDemo", "sample\CrestronLoggingDemo\CrestronLoggingDemo.csproj", "{3C67A769-B4DB-4954-B8DF-A97F2D953DCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrestronLoggingDemoNet47", "sample\CrestronLoggingDemoNet47\CrestronLoggingDemoNet47.csproj", "{3C67A769-B4DB-4954-B8DF-A97F2D953DCC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrestronLoggingDemoNet6", "sample\CrestronLoggingDemoNet6\CrestronLoggingDemoNet6.csproj", "{4BAF46A7-2964-4C4A-819C-41FF185ED2F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{3C67A769-B4DB-4954-B8DF-A97F2D953DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C67A769-B4DB-4954-B8DF-A97F2D953DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C67A769-B4DB-4954-B8DF-A97F2D953DCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BAF46A7-2964-4C4A-819C-41FF185ED2F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BAF46A7-2964-4C4A-819C-41FF185ED2F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BAF46A7-2964-4C4A-819C-41FF185ED2F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BAF46A7-2964-4C4A-819C-41FF185ED2F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CBC44088-953D-4B49-A182-3C00F83A9356} = {0AC7FA22-D235-4CC9-984A-3934905557CA}
 		{3C67A769-B4DB-4954-B8DF-A97F2D953DCC} = {DBCB6E66-7488-44D0-B204-6011FC7869CD}
+		{4BAF46A7-2964-4C4A-819C-41FF185ED2F4} = {DBCB6E66-7488-44D0-B204-6011FC7869CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {597C36F1-1675-492D-9AB6-CA6FF136D241}

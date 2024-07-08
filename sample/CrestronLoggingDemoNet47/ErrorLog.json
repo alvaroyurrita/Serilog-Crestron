@@ -1,8 +1,13 @@
 {
     "Serilog": {
-        "Using":  [ "Serilog.Crestron" ],
+        "Using": [
+            "Serilog.Crestron"
+        ],
         "MinimumLevel": "Verbose",
-        "Enrich": [ "WithSlotNo", "WithProgramName" ],
+        "Enrich": [
+            "WithSlotNo",
+            "WithProgramName"
+        ],
         "WriteTo": [
             {
                 "Name": "CrestronErrorLog",

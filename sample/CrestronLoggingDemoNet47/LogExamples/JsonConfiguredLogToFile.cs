@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Timers;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Core;
@@ -8,7 +9,7 @@ namespace CrestronLoggingDemo
 {
     public partial class ControlSystem
     {
-        private Logger _fileLogFromXml;
+        private ILogger _fileLogFromXml = Logger.None;
         private void SetJsonConfiguredLogToFile()
         {
             //Setting Up File Log with JSON Configuration and Configuration Hot Reload. File is saved to the User directory.
@@ -17,7 +18,7 @@ namespace CrestronLoggingDemo
             //Use Tail LogFile.txt -F to watch the added logs every 30 seconds.
             var fileLogJsonConfig = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("FileLog.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("FileLog.json", false, true)
                 .Build();
             var logFilePath =
                 Path.Combine(
@@ -28,14 +29,14 @@ namespace CrestronLoggingDemo
                 .Enrich.WithProgramName()
                 .ReadFrom.Configuration(fileLogJsonConfig)
                 .WriteTo.File(
-                    path: logFilePath,
+                    logFilePath,
                     outputTemplate:
                     "[{Level:u3} {SlotNo}-{ProgramName}-{FileName}-{MemberName}-{LineNumber}-{Timestamp:HH:mm:ss}] {Message:lj}{NewLine}{Exception}",
                     rollingInterval: RollingInterval.Day)
                 .CreateLogger();
             //creates a timer that logs to file every 30s 100 times
             var countdown = 0;
-            var logToFile = new System.Timers.Timer(30000);
+            var logToFile = new Timer(30000);
             logToFile.Elapsed += (o, e) =>
             {
                 RunExamples(_fileLogFromXml);

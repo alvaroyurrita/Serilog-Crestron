@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#nullable enable // Important!
+// Important!
+
 using System;
 using System.IO;
 using Serilog.Crestron.Sinks.CrestronConsole.Themes;
@@ -24,132 +25,135 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Formatting
     internal class ThemedDisplayValueFormatter : ThemedValueFormatter
     {
         private readonly IFormatProvider? _formatProvider;
-
         public ThemedDisplayValueFormatter(ConsoleTheme theme, IFormatProvider? formatProvider)
-            : base(theme) => _formatProvider = formatProvider;
-
-        public override ThemedValueFormatter SwitchTheme(ConsoleTheme theme) => new ThemedDisplayValueFormatter(theme, _formatProvider);
-
-        protected override int VisitScalarValue(ThemedValueFormatterState state, ScalarValue scalar) => scalar is null ? throw new ArgumentNullException(nameof(scalar)) : FormatLiteralValue(scalar, state.Output, state.Format);
-
+            : base(theme)
+        {
+            _formatProvider = formatProvider;
+        }
+        public override ThemedValueFormatter SwitchTheme(ConsoleTheme theme)
+        {
+            return new ThemedDisplayValueFormatter(theme, _formatProvider);
+        }
+        protected override int VisitScalarValue(ThemedValueFormatterState state, ScalarValue scalar)
+        {
+            return scalar is null
+                ? throw new ArgumentNullException(nameof(scalar))
+                : FormatLiteralValue(scalar, state.Output, state.Format);
+        }
         protected override int VisitSequenceValue(ThemedValueFormatterState state, SequenceValue sequence)
         {
             if (sequence is null)
                 throw new ArgumentNullException(nameof(sequence));
-
             var count = 0;
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write('[');
-
+            }
             var delim = string.Empty;
             foreach (var t in sequence.Elements)
             {
                 if (delim.Length != 0)
-                {
                     using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                    {
                         state.Output.Write(delim);
-                }
-
+                    }
                 delim = ", ";
                 _ = Visit(state, t);
             }
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write(']');
-
+            }
             return count;
         }
-
         protected override int VisitStructureValue(ThemedValueFormatterState state, StructureValue structure)
         {
             var count = 0;
-
             if (structure.TypeTag != null)
             {
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.Name, ref count))
+                {
                     state.Output.Write(structure.TypeTag);
-
+                }
                 state.Output.Write(' ');
             }
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write('{');
-
+            }
             var delim = string.Empty;
             foreach (var property in structure.Properties)
             {
                 if (delim.Length != 0)
-                {
                     using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                    {
                         state.Output.Write(delim);
-                }
-
+                    }
                 delim = ", ";
-
-
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.Name, ref count))
+                {
                     state.Output.Write(property.Name);
-
+                }
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                {
                     state.Output.Write('=');
-
+                }
                 count += Visit(state.Nest(), property.Value);
             }
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write('}');
-
+            }
             return count;
         }
-
         protected override int VisitDictionaryValue(ThemedValueFormatterState state, DictionaryValue dictionary)
         {
             var count = 0;
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write('{');
-
+            }
             var delim = string.Empty;
             foreach (var element in dictionary.Elements)
             {
                 if (delim.Length != 0)
-                {
                     using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                    {
                         state.Output.Write(delim);
-                }
-
+                    }
                 delim = ", ";
-
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                {
                     state.Output.Write('[');
-
+                }
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.String, ref count))
+                {
                     count += Visit(state.Nest(), element.Key);
-
+                }
                 using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+                {
                     state.Output.Write("]=");
-
+                }
                 count += Visit(state.Nest(), element.Value);
             }
-
             using (ApplyStyle(state.Output, ConsoleThemeStyle.TertiaryText, ref count))
+            {
                 state.Output.Write('}');
-
+            }
             return count;
         }
-
         public int FormatLiteralValue(ScalarValue scalar, TextWriter output, string? format)
         {
             var value = scalar.Value;
             var count = 0;
-
             switch (value)
             {
                 case null:
                 {
                     using (ApplyStyle(output, ConsoleThemeStyle.Null, ref count))
+                    {
                         output.Write("null");
+                    }
                     return count;
                 }
                 case string str:
@@ -168,14 +172,17 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Formatting
                                       value is ushort || value is float || value is double:
                 {
                     using (ApplyStyle(output, ConsoleThemeStyle.Number, ref count))
+                    {
                         scalar.Render(output, format, _formatProvider);
+                    }
                     return count;
                 }
                 case bool b:
                 {
                     using (ApplyStyle(output, ConsoleThemeStyle.Boolean, ref count))
+                    {
                         output.Write(b);
-
+                    }
                     return count;
                 }
                 case char ch:
@@ -190,11 +197,10 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Formatting
                 }
             }
             using (ApplyStyle(output, ConsoleThemeStyle.Scalar, ref count))
+            {
                 scalar.Render(output, format, _formatProvider);
-
+            }
             return count;
         }
     }
 }
-
-#nullable restore

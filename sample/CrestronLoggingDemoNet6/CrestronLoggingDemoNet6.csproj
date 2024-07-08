@@ -1,18 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+
     <PropertyGroup>
-        <TargetFrameworks>net47;net6.0</TargetFrameworks>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
         <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
+        <Nullable>enable</Nullable>
         <RootNamespace>CrestronLoggingDemo</RootNamespace>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
+
     <ItemGroup>
-        <PackageReference Include="Crestron.SimplSharp.SDK.Program" Version="2.20.31" />
+        <PackageReference Include="Crestron.SimplSharp.SDK.Program" Version="2.20.66"/>
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-        <PackageReference Include="Serilog.Settings.AppSettings" Version="2.2.2" />
+        <PackageReference Include="Serilog.Settings.AppSettings" Version="3.0.0"/>
         <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
-        <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="6.0.0"/>
     </ItemGroup>
     <ItemGroup>
         <None Update="App.config">
@@ -26,6 +30,7 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Serilog.Crestron\Serilog.Crestron.csproj" />
+        <ProjectReference Include="..\..\src\Serilog.Crestron\Serilog.Crestron.csproj"/>
     </ItemGroup>
+
 </Project>

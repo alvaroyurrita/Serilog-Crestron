@@ -41,7 +41,7 @@ namespace CrestronLoggingDemo
                 {
                     Lat = 25,
                     Long = 134,
-                    Coins = 0,
+                    Coins = 0
                 };
                 log.FromHere().Warning("Warning Level 4. Example: No coins remain at position {@Position:j}",
                     position);

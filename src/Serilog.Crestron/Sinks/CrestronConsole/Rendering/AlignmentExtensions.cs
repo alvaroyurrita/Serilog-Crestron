@@ -18,7 +18,9 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Rendering
 {
     internal static class AlignmentExtensions
     {
-        public static Alignment Widen(this Alignment alignment, int amount) =>
-            new Alignment(alignment.Direction, alignment.Width + amount);
+        public static Alignment Widen(this Alignment alignment, int amount)
+        {
+            return new Alignment(alignment.Direction, alignment.Width + amount);
+        }
     }
 }

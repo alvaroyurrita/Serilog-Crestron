@@ -8,18 +8,17 @@ namespace CrestronLoggingDemo
 {
     public partial class ControlSystem
     {
-        private (LogEventLevel Level, string Description)[] _levels;
+        private readonly (LogEventLevel Level, string Description)[] _levels = 
+        {
+            (LogEventLevel.Verbose, "Level 1: Verbose"),
+            (LogEventLevel.Debug, "Level 2: Debug"),
+            (LogEventLevel.Information, "Level 3: Information"),
+            (LogEventLevel.Warning, "Level 4: Warning"),
+            (LogEventLevel.Error, "Level 5: Error"),
+            (LogEventLevel.Fatal, "Level 6: Fatal")
+        };
         private void SetConsoleLogLevelSwitch()
         {
-            _levels = new (LogEventLevel Level, string Description)[]
-            {
-                (LogEventLevel.Verbose, "Level 1: Verbose"),
-                (LogEventLevel.Debug, "Level 2: Debug"),
-                (LogEventLevel.Information, "Level 3: Information"),
-                (LogEventLevel.Warning, "Level 4: Warning"),
-                (LogEventLevel.Error, "Level 5: Error"),
-                (LogEventLevel.Fatal, "Level 6: Fatal"),
-            };
             _loggingLevelSwitch = new LoggingLevelSwitch
             {
                 MinimumLevel = _levels.First().Level
@@ -33,7 +32,8 @@ namespace CrestronLoggingDemo
         {
             if (string.IsNullOrEmpty(cmdParameters))
             {
-                CrestronConsole.PrintLine("Current Log Level is {0}", _levels.First(l=>l.Level == _loggingLevelSwitch.MinimumLevel).Description);
+                CrestronConsole.PrintLine("Current Log Level is {0}",
+                    _levels.First(l => l.Level == _loggingLevelSwitch.MinimumLevel).Description);
                 return;
             }
             if (int.TryParse(cmdParameters, out var level) && !(level >= 1 && level <= _levels.Length))

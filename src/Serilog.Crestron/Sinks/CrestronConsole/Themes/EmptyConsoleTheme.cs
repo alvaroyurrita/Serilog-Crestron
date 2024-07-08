@@ -19,10 +19,11 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Themes
     internal class EmptyConsoleTheme : ConsoleTheme
     {
         public override bool CanBuffer => true;
-
         protected override int ResetCharCount { get; }
-        protected override int Set(TextWriter output, ConsoleThemeStyle style) => 0;
-
+        protected override int Set(TextWriter output, ConsoleThemeStyle style)
+        {
+            return 0;
+        }
         public override void Reset(TextWriter output)
         {
         }

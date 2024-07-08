@@ -36,9 +36,8 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Themes
                 [ConsoleThemeStyle.LevelInformation] = "\x1b[38;5;0015m",
                 [ConsoleThemeStyle.LevelWarning] = "\x1b[38;5;0011m",
                 [ConsoleThemeStyle.LevelError] = "\x1b[38;5;0015m\x1b[48;5;0196m",
-                [ConsoleThemeStyle.LevelFatal] = "\x1b[38;5;0015m\x1b[48;5;0196m",
+                [ConsoleThemeStyle.LevelFatal] = "\x1b[38;5;0015m\x1b[48;5;0196m"
             });
-
         public static AnsiConsoleTheme Grayscale { get; } = new AnsiConsoleTheme(
             new Dictionary<ConsoleThemeStyle, string>
             {
@@ -57,9 +56,8 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Themes
                 [ConsoleThemeStyle.LevelInformation] = "\x1b[37;1m",
                 [ConsoleThemeStyle.LevelWarning] = "\x1b[37;1m\x1b[47m",
                 [ConsoleThemeStyle.LevelError] = "\x1b[30m\x1b[47m",
-                [ConsoleThemeStyle.LevelFatal] = "\x1b[30m\x1b[47m",
+                [ConsoleThemeStyle.LevelFatal] = "\x1b[30m\x1b[47m"
             });
-
         public static AnsiConsoleTheme Code { get; } = new AnsiConsoleTheme(
             new Dictionary<ConsoleThemeStyle, string>
             {
@@ -78,9 +76,8 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Themes
                 [ConsoleThemeStyle.LevelInformation] = "\x1b[37;1m",
                 [ConsoleThemeStyle.LevelWarning] = "\x1b[38;5;0229m",
                 [ConsoleThemeStyle.LevelError] = "\x1b[38;5;0197m\x1b[48;5;0238m",
-                [ConsoleThemeStyle.LevelFatal] = "\x1b[38;5;0197m\x1b[48;5;0238m",
+                [ConsoleThemeStyle.LevelFatal] = "\x1b[38;5;0197m\x1b[48;5;0238m"
             });
-
         public static AnsiConsoleTheme Sixteen { get; } = new AnsiConsoleTheme(
             new Dictionary<ConsoleThemeStyle, string>
             {
@@ -99,7 +96,7 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Themes
                 [ConsoleThemeStyle.LevelInformation] = AnsiEscapeSequence.BRIGHT_CYAN,
                 [ConsoleThemeStyle.LevelWarning] = AnsiEscapeSequence.BRIGHT_YELLOW,
                 [ConsoleThemeStyle.LevelError] = AnsiEscapeSequence.BRIGHT_RED,
-                [ConsoleThemeStyle.LevelFatal] = AnsiEscapeSequence.BRIGHT_RED,
+                [ConsoleThemeStyle.LevelFatal] = AnsiEscapeSequence.BRIGHT_RED
             });
     }
 }

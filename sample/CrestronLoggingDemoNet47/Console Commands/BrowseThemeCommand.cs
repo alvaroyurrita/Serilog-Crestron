@@ -24,10 +24,9 @@ namespace CrestronLoggingDemo
                 (AnsiConsoleTheme.Code, "AnsiConsoleTheme.Code"),
                 (AnsiConsoleTheme.Grayscale, "AnsiConsoleTheme.Grayscale"),
                 (AnsiConsoleTheme.Literate, "AnsiConsoleTheme.Literate"),
-                (AnsiConsoleTheme.Sixteen, "AnsiConsoleTheme.Sixteen"),
+                (AnsiConsoleTheme.Sixteen, "AnsiConsoleTheme.Sixteen")
             };
             foreach (var (theme, description) in themes)
-            {
                 using (var themedConsoleLog = new LoggerConfiguration()
                            .MinimumLevel.Verbose()
                            .Enrich.WithSlotNo()
@@ -40,7 +39,6 @@ namespace CrestronLoggingDemo
                     RunExamples(themedConsoleLog);
                     CrestronConsole.PrintLine("");
                 }
-            }
         }
     }
 }

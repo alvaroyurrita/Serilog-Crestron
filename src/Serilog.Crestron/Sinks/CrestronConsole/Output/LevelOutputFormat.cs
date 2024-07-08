@@ -18,10 +18,10 @@ using Serilog.Events;
 namespace Serilog.Crestron.Sinks.CrestronConsole.Output
 {
     /// <summary>
-    /// Implements the {Level} element.
-    /// can now have a fixed width applied to it, as well as casing rules.
-    /// Width is set through formats like "u3" (uppercase three chars),
-    /// "w1" (one lowercase char), or "t4" (title case four chars).
+    ///     Implements the {Level} element.
+    ///     can now have a fixed width applied to it, as well as casing rules.
+    ///     Width is set through formats like "u3" (uppercase three chars),
+    ///     "w1" (one lowercase char), or "t4" (title case four chars).
     /// </summary>
     internal static class LevelOutputFormat
     {
@@ -32,7 +32,7 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
             new[] { "I", "In", "Inf", "Info" },
             new[] { "W", "Wn", "Wrn", "Warn" },
             new[] { "E", "Er", "Err", "Eror" },
-            new[] { "F", "Fa", "Ftl", "Fatl" },
+            new[] { "F", "Fa", "Ftl", "Fatl" }
         };
         private static readonly string[][] LowercaseLevelMap =
         {
@@ -41,7 +41,7 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
             new[] { "i", "in", "inf", "info" },
             new[] { "w", "wn", "wrn", "warn" },
             new[] { "e", "er", "err", "eror" },
-            new[] { "f", "fa", "ftl", "fatl" },
+            new[] { "f", "fa", "ftl", "fatl" }
         };
         private static readonly string[][] UppercaseLevelMap =
         {
@@ -50,12 +50,11 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
             new[] { "I", "IN", "INF", "INFO" },
             new[] { "W", "WN", "WRN", "WARN" },
             new[] { "E", "ER", "ERR", "EROR" },
-            new[] { "F", "FA", "FTL", "FATL" },
+            new[] { "F", "FA", "FTL", "FATL" }
         };
-
         public static string GetLevelMoniker(LogEventLevel value, string? format = null)
         {
-            if (format is null || format.Length != 2 && format.Length != 3)
+            if (format is null || (format.Length != 2 && format.Length != 3))
                 return Casing.Format(value.ToString(), format);
 
             // Using int.Parse() here requires allocating a string to exclude the first character prefix.
@@ -66,10 +65,8 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
                 width *= 10;
                 width += format[2] - '0';
             }
-
             if (width < 1)
                 return string.Empty;
-
             if (width > 4)
             {
                 var stringValue = value.ToString();
@@ -77,7 +74,6 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
                     stringValue = stringValue.Substring(0, width);
                 return Casing.Format(stringValue);
             }
-
             var index = (int)value;
             if (index < 0 || index > (int)LogEventLevel.Fatal) return Casing.Format(value.ToString(), format);
             return format[0] switch

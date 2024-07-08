@@ -8,7 +8,7 @@ namespace CrestronLoggingDemo
 {
     public partial class ControlSystem
     {
-        private Logger _errorLogFromXml;
+        private ILogger _errorLogFromXml = Logger.None;
         private void SetXmlConfiguredLog()
         {
             //Setting Up Error Log with XML Configuration.
@@ -27,7 +27,6 @@ namespace CrestronLoggingDemo
             };
             errorLogXmlConfigWatcher.Changed += (o, e) =>
             {
-                _errorLogFromXml.Dispose();
                 _errorLogFromXml = new LoggerConfiguration()
                     .Enrich.WithSlotNo()
                     .Enrich.WithProgramName()

@@ -26,12 +26,10 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
     internal class OutputTemplateRenderer : ITextFormatter
     {
         private readonly OutputTemplateTokenRenderer[] _renderers;
-
         public OutputTemplateRenderer(ConsoleTheme theme, string outputTemplate, IFormatProvider? formatProvider)
         {
             if (outputTemplate is null) throw new ArgumentNullException(nameof(outputTemplate));
             var template = new MessageTemplateParser().Parse(outputTemplate);
-
             var renderers = new List<OutputTemplateTokenRenderer>();
             foreach (var token in template.Tokens)
             {
@@ -40,7 +38,6 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
                     renderers.Add(new TextTokenRenderer(theme, tt.Text));
                     continue;
                 }
-
                 var pt = (PropertyToken)token;
                 switch (pt.PropertyName)
                 {
@@ -67,15 +64,12 @@ namespace Serilog.Crestron.Sinks.CrestronConsole.Output
                         break;
                 }
             }
-
             _renderers = renderers.ToArray();
         }
-
         public void Format(LogEvent logEvent, TextWriter output)
         {
             if (logEvent is null) throw new ArgumentNullException(nameof(logEvent));
             if (output is null) throw new ArgumentNullException(nameof(output));
-
             foreach (var renderer in _renderers)
                 renderer.Render(logEvent, output);
         }
