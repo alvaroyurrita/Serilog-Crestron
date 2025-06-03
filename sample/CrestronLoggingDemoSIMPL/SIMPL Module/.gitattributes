@@ -1,0 +1,26 @@
+# Set the default behavior, in case people do not have core.autocrlf set.
+* text=auto
+*.usp text eol=crlf
+*.usl text eol=crlf
+*.umc text eol=crlf
+*.smw text eol=crlf 
+*.ush text eol=crlf
+*.sgd_ text eol=crlf
+*.rsd text eol=crlf
+
+
+# Declare files that are text files
+.gitattributes text
+.gitignore text
+*.md text
+
+# Denote all files that are truly binary and should not be modified
+*.vtp binary
+*.zip binary
+*.vtz binary
+*.umc binary
+*.smw binary
+*.ush binary
+*.sgd_ binary
+*.rsd binary
+*.pdf binary

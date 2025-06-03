@@ -26,6 +26,6 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Serilog.Crestron\Serilog.Crestron.csproj"/>
+      <ProjectReference Include="..\..\src\Serilog.Crestron\Serilog.Crestron.csproj" />
     </ItemGroup>
 </Project>

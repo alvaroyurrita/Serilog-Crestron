@@ -1,0 +1,84 @@
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#USER_SIMPLSHARP_LIBRARY "CrestronLoggingDemoSimpl"
+#Enable_Trace
+
+DIGITAL_INPUT PrintLogSamples;
+ANALOG_INPUT LogLevel;
+
+CrestronLoggingDemoSimpl Driver;
+
+Function SetLogLevel(Integer level) {
+	Trace("Log level Changed to %u\r",LogLevel);
+	if (LogLevel<1 || LogLevel>6) return;
+	Driver.SetLogLevel(level-1);
+}
+
+String_Function LogLevelToName(Integer level) {
+	String name[20];
+	
+	Switch (level) {
+		Case (0): {
+			name = "Verbose";
+		}
+		Case (1): {
+			name = "Debug";
+		}
+		Case (2): {
+			name = "Information";
+		}
+		Case (3): {
+			name = "Warning";
+		}
+		Case (4): {
+			name = "Error";
+		}
+		Case (5): {
+			name = "Fatal";
+		}
+		Default: {
+			name = "Not Valid";
+		}
+	}
+	return (name);
+}
+
+CHANGE LogLevel {
+	SetLogLevel(LogLevel);
+}
+
+Push PrintLogSamples {
+	string name[20];
+	
+	name = LogLevelToName(LogLevel);
+	Trace("Printing Log Samples with Log Level %s\r",name);
+	Driver.PrintLogSamples();
+	Trace("--------------------------\r");
+	
+}
+/*
+Note that by putting the 1 to set the LogLevel immidatly at startup in SIMPL,
+it is not always determined if the SIMPL+ module will register the change while
+the Main function waits in the WaitForInitializationCompete() function.  
+
+Doing several ProgResets, sometimes the LogLevel will change, and sometimes it wont.
+
+To make sure the LogLevel is registered, it is better to call the method again after
+WaitFotInitializationComplete, even if that means that two calls to the SetLogLevel function 
+will be executed (Once in Main, and a Second in CHANGE LogLevel
+*/
+
+
+Function Main() {
+	Trace("Before Initialization\r");
+	SetLogLevel(LogLevel);
+	Driver.PrintLogSamples();
+	WaitForInitializationComplete();
+	SetLogLevel(LogLevel);
+	Trace("After Initialization\r");
+	Driver.PrintLogSamples();
+}
+
+
+
